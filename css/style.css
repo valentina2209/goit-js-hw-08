@@ -18,14 +18,6 @@
     box-sizing: border-box;
 }  
 
-.gallery .gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px; 
-    object-fit: cover; 
-}
-
 .gallery-item { 
     overflow: hidden;
     border-radius: 8px;
