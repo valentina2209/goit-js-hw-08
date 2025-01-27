@@ -1,0 +1,61 @@
+/* styles.css */
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    padding: 16px;
+    margin: 0 auto;
+    list-style: none;
+    max-width: 1440px;
+    box-sizing: border-box;  
+    overflow: hidden;   
+} 
+
+.gallery .gallery-item {
+    width: calc((100% - 72px) / 3);
+    box-sizing: border-box;
+}  
+
+.gallery .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px; 
+    object-fit: cover; 
+}
+
+.gallery-item { 
+    overflow: hidden;
+    border-radius: 8px;
+}
+  
+.gallery-link {
+    text-decoration: none;
+}
+  
+.gallery-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+  
+/* Style modal window */
+
+.basicLightbox.custom-modal {
+    background-color: rgba(0, 0, 0, 1) !important; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+   
+.basicLightbox.custom-modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px; 
+}
+
