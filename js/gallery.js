@@ -65,41 +65,57 @@ const images = [
     ];
     // Створюємо контейнер для галареї
 
-    const galleryContainer = document.querySelector('.gallery');
+    const gallery = document.querySelector('.gallery');
 
-    // Делегування подій для обробки кліка
+    // Динамічне створення розмітки галереї
+    images.forEach(image => {
+        const item = document.createElement('li');
+        item.classList.add('gallery-item');
 
-    galleryContainer.addEventListener('click', (event) => {
-        event.preventDefault(); // скидаємо стандартну поведінку посилання
+        const link = document.createElement('a');
+        link.classList.add('gallery-link');
+        link.href = image.original;
 
-        // Перевіряємо, чи клікнули на зображення
+        const img = document.createElement('img');
+        img.classList.add('gallery-image');
+        img.src = image.preview;
+        img.alt = image.description;
 
-        const isImage = event.target.classList.contains('gallery-image');
-        if (!isImage) return;
+        link.appendChild(img);
+        item.appendChild(link);
+        gallery.appendChild(item);
+    });
 
-        // Отримуємо посилання на велике зображення
+    let modalInstance = null;
 
-        const imageSource = event.target.dataset.source;
-
-        // Відкриваємо модальне вікно з додатковим класом
-
-        const instance = basicLightbox.create(
-            `<img src="${imageSource}" alt="${event.target.alt}">`,
-            {
+    function openModal(imageSrc) {
+        modalInstance = basicLightbox.create(`
+            <img src="${imageSrc}" alt="Зображення" class="modal-image">
+            `, {
                 className: 'custom-modal',
-            }  
-        );
-        
-        instance.show();
+                onclose: () => {
+                    document.removeEventListener('keydown', handleKeyPress);
+                },
+            });
 
-        // Закриваємо модальне вікно
+            modalInstance.show();
+            document.addEventListener('keydown', handleKeyPress);
+    }
+
+    // Обробник клавіатури
+    function handleKeyPress(event) {
+        if (event.key === 'Escape' && modalInstance) {
+            modalInstance.close();
+        }
+    }
+
+    // Обробник кліку по галереї
+    document.querySelector('.gallery').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (event.target.tagName === 'IMG') {
+            const imageSrc = event.target.closest('a').href;
+            openModal(imageSrc);
+        }
+    });
     
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-              instance.close();
-            }
-        });
-
-    })
-
-   
